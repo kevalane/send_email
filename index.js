@@ -8,7 +8,7 @@ const sesConfig = {
 const ses = new AWS.SES(sesConfig)
 
 exports.handler =  async (event, context) => {
-    // const incomingMsg = JSON.parse(event.Records[0].body);
+    const body = JSON.parse(event.body);
     const msg = "Hello World from Lambda & SES!";
     const html = "<p>Hello World from Lambda & SES using HTML</p>";
     const params = {
@@ -33,7 +33,7 @@ exports.handler =  async (event, context) => {
         },
         Source: process.env.destination,
         ReplyToAddresses: [
-            "kevras.contact@gmail.com"
+            body.replyAddress
         ]
     }
     await ses.sendEmail(params).promise().then((data) => {
