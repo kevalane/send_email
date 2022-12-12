@@ -9,8 +9,12 @@ const ses = new AWS.SES(sesConfig)
 
 exports.handler =  async (event, context) => {
     const body = JSON.parse(event.body);
-    const msg = "Hello World from Lambda & SES!";
-    const html = "<p>Hello World from Lambda & SES using HTML</p>";
+    const msg = "Namne: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
+    msg += "Phone: " + body.phone + "\n" + "Guests: " + body.guests + "\nDate of interest: " + body.date + "\n";
+    msg += "Message: " + body.message + "\n";
+    const html = "Namne: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
+    msg += "Phone: " + body.phone + "<br>" + "Guests: " + body.guests + "<br>Date of interest: " + body.date + "<br>";
+    msg += "Message: " + body.message + "<br>";
     const params = {
         Destination: {
             ToAddresses: [process.env.destination]
@@ -28,12 +32,12 @@ exports.handler =  async (event, context) => {
             },
             Subject: {
                 Charset: 'UTF-8',
-                Data: "HELLO WORLD"
+                Data: "New message from " + body.firstName + " " + body.lastName
             }
         },
         Source: process.env.destination,
         ReplyToAddresses: [
-            body.replyAddress
+            body.email
         ]
     }
     await ses.sendEmail(params).promise().then((data) => {
