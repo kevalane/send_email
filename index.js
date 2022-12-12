@@ -21,12 +21,12 @@ exports.handler =  async (event, context) => {
         };
         return response;
     }
-    let msg = "Namne: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
+    let msg = "Name: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
     msg += "Phone: " + body.phone + "\n" + "Guests: " + body.guests + "\nDate of interest: " + body.date + "\n";
     msg += "Message: " + body.message + "\n";
-    let html = "Namne: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
-    msg += "Phone: " + body.phone + "<br>" + "Guests: " + body.guests + "<br>Date of interest: " + body.date + "<br>";
-    msg += "Message: " + body.message + "<br>";
+    let html = "Name: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
+    html += "Phone: " + body.phone + "<br>" + "Guests: " + body.guests + "<br>Date of interest: " + body.date + "<br>";
+    html += "Message: " + body.message + "<br>";
     const params = {
         Destination: {
             ToAddresses: [process.env.destination]
