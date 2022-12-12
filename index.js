@@ -1,7 +1,9 @@
 const AWS = require('aws-sdk');
+const dotenv = require('dotenv').config();
+
 const sesConfig = {
     apiVersion: '2010-12-01',
-    region: 'eu-central-1',
+    region: process.env.region,
 }
 const ses = new AWS.SES(sesConfig)
 
@@ -11,7 +13,7 @@ exports.handler =  async (event, context) => {
     const html = "<p>Hello World from Lambda & SES using HTML</p>";
     const params = {
         Destination: {
-            ToAddresses: ["kevin@jkmholding.com"]
+            ToAddresses: [process.env.destination]
         },
         Message: {
             Body: {
@@ -29,7 +31,7 @@ exports.handler =  async (event, context) => {
                 Data: "HELLO WORLD"
             }
         },
-        Source: "kevin@jkmholding.com",
+        Source: process.env.destination,
         ReplyToAddresses: [
             "kevras.contact@gmail.com"
         ]
