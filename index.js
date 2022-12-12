@@ -8,11 +8,23 @@ const sesConfig = {
 const ses = new AWS.SES(sesConfig)
 
 exports.handler =  async (event, context) => {
-    const body = JSON.parse(event.body);
-    const msg = "Namne: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
+    console.log(event.body);
+    let body = {};
+    try {
+        body = JSON.parse(event.body);
+    } catch (err) {
+        console.error(err);
+        const response = {
+            "statusCode": 400,
+            "body": JSON.stringify(err),
+            "isBase64Encoded": false
+        };
+        return response;
+    }
+    let msg = "Namne: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
     msg += "Phone: " + body.phone + "\n" + "Guests: " + body.guests + "\nDate of interest: " + body.date + "\n";
     msg += "Message: " + body.message + "\n";
-    const html = "Namne: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
+    let html = "Namne: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
     msg += "Phone: " + body.phone + "<br>" + "Guests: " + body.guests + "<br>Date of interest: " + body.date + "<br>";
     msg += "Message: " + body.message + "<br>";
     const params = {
