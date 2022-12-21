@@ -16,7 +16,12 @@ exports.handler =  async (event, context) => {
         const response = {
             "statusCode": 400,
             "body": JSON.stringify(err),
-            "isBase64Encoded": false
+            "isBase64Encoded": false,
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
         };
         return response;
     }
@@ -31,7 +36,12 @@ exports.handler =  async (event, context) => {
         return {
             "statusCode": 400,
             "body": JSON.stringify({message: "Invalid type"}),
-            "isBase64Encoded": false
+            "isBase64Encoded": false,
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
         }
     }
 
@@ -72,7 +82,12 @@ exports.handler =  async (event, context) => {
     const response = {
         "statusCode": 200,
         "body": JSON.stringify({message: "Message sent successfully"}),
-        "isBase64Encoded": false
+        "isBase64Encoded": false,
+        headers: {
+            "Access-Control-Allow-Headers" : "Content-Type",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
     };
     return response;
 }
