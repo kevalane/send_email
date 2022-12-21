@@ -78,16 +78,30 @@ exports.handler =  async (event, context) => {
             body.email
         ]
     }
-    await ses.sendEmail(params);
-    const response = {
-        "statusCode": 200,
-        "body": JSON.stringify({message: "Message sent successfully"}),
-        "isBase64Encoded": false,
-        headers: {
-            "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-        },
-    };
-    return response;
+    await ses.sendEmail(params).promise().then(data => {
+        const response = {
+            "statusCode": 200,
+            "body": JSON.stringify({message: "Message sent successfully"}),
+            "isBase64Encoded": false,
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+        };
+        return response;
+    }).catch(err => {
+        console.error(err);
+        const response = {
+            "statusCode": 400,
+            "body": JSON.stringify(err),
+            "isBase64Encoded": false,
+            headers: {
+                "Access-Control-Allow-Headers" : "Content-Type",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+        };
+        return response;
+    });
 }
