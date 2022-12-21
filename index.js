@@ -52,21 +52,11 @@ exports.handler =  async (event, context) => {
             body.email
         ]
     }
-    await ses.sendEmail(params).promise().then((data) => {
-        console.log(data)
-        const response = {
-            "statusCode": 200,
-            "body": JSON.stringify(data),
-            "isBase64Encoded": false
-        };
-        return response;
-    }).catch((err) => {
-        console.error(err)
-      	const response = {
-            "statusCode": 501,
-            "body": JSON.stringify(err),
-            "isBase64Encoded": false
-        };
-        return response;
-    });
+    await ses.sendEmail(params);
+    const response = {
+        "statusCode": 200,
+        "body": JSON.stringify({message: "Message sent successfully"}),
+        "isBase64Encoded": false
+    };
+    return response;
 }
