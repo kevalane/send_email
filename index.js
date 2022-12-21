@@ -35,11 +35,13 @@ exports.handler =  async (event, context) => {
         }
     }
 
-    let msg = "Name: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
-    msg += "Phone: " + body.phone + "\n" + "Guests: " + body.guests + "\nDate of interest: " + body.date + "\n";
+    let msg = "Contact Information:\n\nName: " + body.firstName + " " + body.lastName + "\n\n" + "Email: " + body.email + "\n\n";
+    msg += "Phone: " + body.phone + "\n\n\n" + "Booking Information:\n\nGuests: " + body.guests + "\n\nDate of interest: " + body.date + "\n\n";
     msg += "Message: " + body.message + "\n";
-    let html = "Name: " + body.firstName + " " + body.lastName + "<br>" + "Email: " + body.email + "<br>";
-    html += "Phone: " + body.phone + "<br>" + "Guests: " + body.guests + "<br>Date of interest: " + body.date + "<br>";
+
+    // HTML version of the message
+    let html = "Contact Information:<br><br>Name: " + body.firstName + " " + body.lastName + "<br><br>" + "Email: " + body.email + "<br><br>";
+    html += "Phone: " + body.phone + "<br><br><br>" + "Booking Information:<br><br>Guests: " + body.guests + "<br><br>Date of interest: " + body.date + "<br><br>";
     html += "Message: " + body.message + "<br>";
     const params = {
         Destination: {
