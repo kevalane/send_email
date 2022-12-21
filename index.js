@@ -8,7 +8,6 @@ const sesConfig = {
 const ses = new AWS.SES(sesConfig)
 
 exports.handler =  async (event, context) => {
-    console.log(event.body);
     let body = {};
     try {
         body = JSON.parse(event.body);
@@ -21,6 +20,21 @@ exports.handler =  async (event, context) => {
         };
         return response;
     }
+    let subject = "";
+    if (body.type == 'booking') {
+        subject = "Inquiry from Booking Form on fouclub.com";
+    } else if (body.type == 'events') {
+        subject = "Inquiry from Events Form on fouclub.com";
+    } else if (body.type == 'lost') {
+        subject = "Inquiry from Lost & Found Form on fouclub.com";
+    } else {
+        return {
+            "statusCode": 400,
+            "body": JSON.stringify({message: "Invalid type"}),
+            "isBase64Encoded": false
+        }
+    }
+
     let msg = "Name: " + body.firstName + " " + body.lastName + "\n" + "Email: " + body.email + "\n";
     msg += "Phone: " + body.phone + "\n" + "Guests: " + body.guests + "\nDate of interest: " + body.date + "\n";
     msg += "Message: " + body.message + "\n";
@@ -44,7 +58,7 @@ exports.handler =  async (event, context) => {
             },
             Subject: {
                 Charset: 'UTF-8',
-                Data: "New message from " + body.firstName + " " + body.lastName
+                Data: subject
             }
         },
         Source: process.env.destination,
